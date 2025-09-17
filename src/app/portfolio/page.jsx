@@ -76,7 +76,7 @@ const PortfolioPage = () => {
                   {/* Button */}
                   {item.link && (
                     <Link href={item.link} target="_blank">
-                      <button className="px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 bg-white text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition dark:text-gray-100">
+                      <button className="px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 bg-white text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-200 transition dark:text-gray-800">
                         See Demo
                       </button>
                     </Link>
