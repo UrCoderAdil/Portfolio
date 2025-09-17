@@ -45,7 +45,7 @@ const ContactPage = () => {
     >
       <div className="h-full flex flex-col lg:flex-row px-4 sm:px-8 md:px-12 lg:px-20 xl:px-48">
         {/* TEXT CONTAINER */}
-        <div className="h-1/2 lg:h-full lg:w-1/2 flex items-center justify-center text-6xl">
+        <div className="h-1/2 lg:h-full lg:w-1/2 flex items-center justify-center text-6xl dark:text-gray-800">
           <div>
             {text.split("").map((letter, index) => (
               <motion.span
@@ -69,7 +69,7 @@ const ContactPage = () => {
         <form
           onSubmit={sendEmail}
           ref={form}
-          className="h-1/2 lg:h-full lg:w-1/2 bg-red-50 rounded-xl text-xl flex flex-col gap-6 justify-center p-10"
+          className="h-1/2 lg:h-full lg:w-1/2 bg-red-50 rounded-xl text-xl flex flex-col gap-6 justify-center p-10 dark:text-gray-400"
         >
           <span>Dear UrCoderAdil,</span>
 
@@ -77,7 +77,7 @@ const ContactPage = () => {
             rows={6}
             name="user_message"
             placeholder="Write your message here..."
-            className="bg-transparent border-b-2 border-b-black outline-none resize-none p-2 focus:border-purple-400"
+            className="bg-transparent border-b-2 border-b-black outline-none resize-none p-2 focus:border-purple-400 dark:text-gray-400"
           />
 
           <span>My mail address is:</span>
@@ -88,11 +88,11 @@ const ContactPage = () => {
             className="bg-transparent border-b-2 border-b-black outline-none p-2 focus:border-purple-400"
           />
 
-          <span>Regards</span>
+          <span className="dark:text-gray-400">Regards</span>
 
           <button
             type="submit"
-            className="bg-purple-200 rounded font-semibold text-gray-600 p-4 hover:bg-purple-300 transition"
+            className="bg-purple-200 rounded font-semibold text-gray-600 p-4 hover:bg-purple-300 transition dark:text-gray-400"
           >
             Send
           </button>

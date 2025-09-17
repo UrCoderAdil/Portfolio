@@ -38,13 +38,13 @@ const AboutPage = () => {
               className="w-28 h-28 rounded-full object-cover"
             />
             {/* BIOGRAPHY TITLE */}
-            <h1 className="font-bold text-2xl">BIOGRAPHY</h1>
+            <h1 className="font-bold text-2xl dark:text-gray-800">BIOGRAPHY</h1>
             {/* BIOGRAPHY DESC */}
-            <p className="text-lg">
+            <p className="text-lg dark:text-gray-600">
               I am a passionate learner and builder with a sharp curiosity for technology,AI, and design. From solving advanced differential equations to crafting modern web and mobile applications, I thrive on exploring both logical precision and creative expression. My journey bridges multiple domains—computer programming, app development, UI/UX design, and deep dives into frameworks like Next.js, React, Flutter, and Node.js. My work reflects a balance of structure and creativity: I write elegant code, experiment with layouts that feel intuitive, and constantly ask “why” to truly master concepts. Beyond the technical, I am steadily shaping myself into not only a capable developer but also a thinker who connects technical skill with real-world impact. My path is marked by curiosity, resilience, and a vision to build solutions that are both meaningful and lasting
             </p>
             {/* BIOGRAPHY QUOTE */}
-            <span className="italic">
+            <span className="italic dark:text-gray-600">
               I don’t just want to learn how things work—I want to build what matters, connect logic with creativity, and leave behind something that speaks for itself.
             </span>
             {/* BIOGRAPHY SIGN SVG*/}
@@ -82,7 +82,7 @@ const AboutPage = () => {
               initial={{ x: "-300px" }}
               animate={isSkillRefInView ? { x: 0 } : {}}
               transition={{ delay: 0.2 }}
-              className="font-bold text-2xl"
+              className="font-bold text-2xl dark:text-gray-800"
             >
               SKILLS
             </motion.h1>
@@ -128,7 +128,7 @@ const AboutPage = () => {
               initial={{ x: "-300px" }}
               animate={isExperienceRefInView ? { x: "0" } : {}}
               transition={{ delay: 0.2 }}
-              className="font-bold text-2xl"
+              className="font-bold text-2xl dark:text-gray-800"
             >
               EXPERIENCE
             </motion.h1>
@@ -136,18 +136,18 @@ const AboutPage = () => {
             <motion.div
               initial={{ x: "-300px" }}
               animate={isExperienceRefInView ? { x: "0" } : {}}
-              className=""
+              className="dark:text-gray-400"
             >
               {/* EXPERIENCE LIST ITEM */}
               <div className="flex justify-between h-48">
                 {/* LEFT */}
                 <div className="w-1/3 ">
                   {/* JOB TITLE */}
-                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-s-lg">
+                  <div className="bg-white p-3 font-semibold rounded-b-lg rounded-s-lg dark:text-gray-400">
                     Senior Python Engineer
                   </div>
                   {/* JOB DESC */}
-                  <div className="p-3 text-sm italic">
+                  <div className="p-3 text-sm italic dark:text-gray-400">
                     I have worked with Python developing AI models,Creating Games,Writing Backend{" "}
                   </div>
                   {/* JOB DATE */}
@@ -155,7 +155,7 @@ const AboutPage = () => {
                     2023 - 2025{" "}
                   </div>
                   {/* JOB COMPANY */}
-                  <div className="p-1 rounded bg-white text-sm font-semibold w-fit">
+                  <div className="p-1 rounded bg-white text-sm font-semibold w-fit ">
                     Home
                   </div>
                 </div>
