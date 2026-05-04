@@ -38,7 +38,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative h-full overflow-hidden">
+    <div className="relative h-full overflow-x-hidden">
       <ThreeBackground />
 
       <motion.div
@@ -47,10 +47,10 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <div className="h-full flex flex-col-reverse sm:flex-row items-center gap-8 sm:gap-12 px-6 sm:px-10 md:px-14 lg:px-20 xl:px-48">
+        <div className="min-h-full sm:h-full overflow-y-auto sm:overflow-hidden flex flex-col sm:flex-row items-center gap-8 sm:gap-12 px-6 sm:px-10 md:px-14 lg:px-20 xl:px-48 py-10 sm:py-0">
 
           {/* ── LEFT: text ────────────────────────────── */}
-          <div className="flex-1 flex flex-col gap-5 sm:gap-6 pb-4 sm:pb-0">
+          <div className="flex-1 flex flex-col gap-5 sm:gap-6 order-2 sm:order-1">
 
             <span
               ref={greetRef}
@@ -61,7 +61,7 @@ export default function Home() {
 
             <h1
               ref={nameRef}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[0.95] tracking-tight text-[var(--text-1)] opacity-0"
+              className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-[0.95] tracking-tight text-[var(--text-1)] opacity-0"
               style={{ fontFamily: "var(--font-jakarta)" }}
             >
               Muhammad
@@ -150,18 +150,18 @@ export default function Home() {
           {/* ── RIGHT: circular photo ────────────────── */}
           <div
             ref={imgRef}
-            className="flex-shrink-0 flex items-center justify-center opacity-0"
+            className="flex-shrink-0 flex items-center justify-center opacity-0 order-1 sm:order-2"
           >
-            <div className="relative flex items-center justify-center w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] lg:w-[320px] lg:h-[320px]">
+            <div className="relative flex items-center justify-center w-[190px] h-[190px] sm:w-[280px] sm:h-[280px] lg:w-[320px] lg:h-[320px]">
 
               {/* Ambient glow */}
               <div className="absolute inset-0 rounded-full bg-indigo-400/10 dark:bg-indigo-400/5 blur-3xl scale-110" />
 
               {/* Outer rotating dashed ring */}
-              <div className="spin-slow absolute inset-[-18px] sm:inset-[-22px] rounded-full border border-dashed border-indigo-300/40 dark:border-indigo-500/20" />
+              <div className="spin-slow absolute inset-[-14px] sm:inset-[-22px] rounded-full border border-dashed border-indigo-300/40 dark:border-indigo-500/20" />
 
               {/* Inner static ring */}
-              <div className="absolute inset-[-8px] sm:inset-[-10px] rounded-full border border-[var(--border)]" />
+              <div className="absolute inset-[-6px] sm:inset-[-10px] rounded-full border border-[var(--border)]" />
 
               {/* Photo circle */}
               <div className="relative w-full h-full rounded-full overflow-hidden ring-4 ring-[var(--surface)] shadow-2xl shadow-indigo-100/50 dark:shadow-indigo-900/30">
@@ -175,7 +175,7 @@ export default function Home() {
               </div>
 
               {/* Available badge */}
-              <div className="absolute bottom-3 -right-2 sm:bottom-5 sm:-right-4 bg-[var(--surface)] rounded-full px-3 py-1.5 shadow-xl border border-[var(--border)] flex items-center gap-1.5 z-10">
+              <div className="absolute bottom-2 -right-2 sm:bottom-5 sm:-right-4 bg-[var(--surface)] rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 shadow-xl border border-[var(--border)] flex items-center gap-1.5 z-10">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
                 <span className="text-[11px] font-semibold text-[var(--text-1)] whitespace-nowrap">
                   Available
@@ -183,7 +183,7 @@ export default function Home() {
               </div>
 
               {/* Code badge */}
-              <div className="absolute top-4 -left-3 sm:top-6 sm:-left-6 bg-[var(--surface)] rounded-xl px-3 py-2 shadow-xl border border-[var(--border)] z-10">
+              <div className="absolute top-2 -left-2 sm:top-6 sm:-left-6 bg-[var(--surface)] rounded-xl px-2.5 py-1.5 sm:px-3 sm:py-2 shadow-xl border border-[var(--border)] z-10">
                 <p className="text-[10px] font-mono text-[var(--text-2)]">
                   <span className="text-[var(--accent)]">const</span> dev ={" "}
                   <span className="text-emerald-500">&quot;Adil&quot;</span>

@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import emailjs from "@emailjs/browser";
 import Link from "next/link";
 import gsap from "gsap";
 
@@ -37,9 +36,10 @@ const socials = [
 
 const ContactPage = () => {
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
-  const form = useRef(null);
+  const [fields, setFields] = useState({ name: "", email: "", message: "" });
+
   const leftRef = useRef(null);
   const rightRef = useRef(null);
 
@@ -51,22 +51,44 @@ const ContactPage = () => {
     return () => ctx.revert();
   }, []);
 
-  const sendEmail = (e) => {
+  const handleChange = (e) => {
+    setFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const sendEmail = async (e) => {
     e.preventDefault();
-    setError(false);
+    setError("");
     setSuccess(false);
     setSending(true);
-    emailjs
-      .sendForm(
-        process.env.NEXT_PUBLIC_SERVICE_ID,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID,
-        form.current,
-        process.env.NEXT_PUBLIC_PUBLIC_KEY
-      )
-      .then(
-        () => { setSuccess(true); setSending(false); form.current.reset(); },
-        (err) => { setError(err.text || "Failed to send"); setSending(false); }
-      );
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(fields),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Failed to send. Please try again.");
+      } else {
+        setSuccess(true);
+        setFields({ name: "", email: "", message: "" });
+      }
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  const inputClass =
+    "border rounded-xl outline-none p-4 text-sm placeholder:text-[var(--text-3)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/10 transition-all duration-200 w-full";
+  const inputStyle = {
+    background: "var(--surface-2)",
+    borderColor: "var(--border)",
+    color: "var(--text-1)",
   };
 
   return (
@@ -79,7 +101,7 @@ const ContactPage = () => {
       <div className="h-full flex flex-col lg:flex-row items-center gap-10 lg:gap-16 px-6 sm:px-10 md:px-14 lg:px-20 xl:px-48 overflow-y-auto lg:overflow-hidden py-8 lg:py-0">
 
         {/* LEFT */}
-        <div ref={leftRef} className="lg:h-full lg:w-1/2 flex flex-col justify-center gap-8 opacity-0">
+        <div ref={leftRef} className="w-full lg:h-full lg:w-1/2 flex flex-col justify-center gap-8 opacity-0">
           <div className="flex flex-col gap-3">
             <span className="text-xs font-semibold tracking-[0.22em] text-[var(--accent)] uppercase">
               Contact
@@ -106,10 +128,10 @@ const ContactPage = () => {
               Direct email
             </span>
             <a
-              href="mailto:urcoderadil@gmail.com"
+              href="mailto:adilumer2005@gmail.com"
               className="group text-[var(--text-1)] font-semibold text-base hover:text-[var(--accent)] transition-colors duration-200 flex items-center gap-2"
             >
-              urcoderadil@gmail.com
+              adilumer2005@gmail.com
               <svg className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-200 -translate-x-1 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -146,10 +168,9 @@ const ContactPage = () => {
         </div>
 
         {/* RIGHT — Form */}
-        <div ref={rightRef} className="lg:h-full lg:w-1/2 flex items-center w-full opacity-0">
+        <div ref={rightRef} className="w-full lg:h-full lg:w-1/2 flex items-center opacity-0">
           <form
             onSubmit={sendEmail}
-            ref={form}
             className="w-full bg-[var(--surface)] rounded-2xl border border-[var(--border)] shadow-sm p-7 sm:p-8 flex flex-col gap-5"
           >
             <div>
@@ -164,39 +185,54 @@ const ContactPage = () => {
               </p>
             </div>
 
+            {/* Name */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[11px] font-semibold text-[var(--text-3)] uppercase tracking-wider">
+                Your name
+              </label>
+              <input
+                name="name"
+                type="text"
+                value={fields.name}
+                onChange={handleChange}
+                placeholder="Muhammad Adil"
+                required
+                style={inputStyle}
+                className={inputClass}
+              />
+            </div>
+
+            {/* Email */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-[11px] font-semibold text-[var(--text-3)] uppercase tracking-wider">
+                Your email
+              </label>
+              <input
+                name="email"
+                type="email"
+                value={fields.email}
+                onChange={handleChange}
+                placeholder="you@example.com"
+                required
+                style={inputStyle}
+                className={inputClass}
+              />
+            </div>
+
+            {/* Message */}
             <div className="flex flex-col gap-1.5">
               <label className="text-[11px] font-semibold text-[var(--text-3)] uppercase tracking-wider">
                 Your message
               </label>
               <textarea
                 rows={5}
-                name="user_message"
+                name="message"
+                value={fields.message}
+                onChange={handleChange}
                 placeholder="Tell me about your project or idea..."
                 required
-                style={{
-                  background: "var(--surface-2)",
-                  borderColor: "var(--border)",
-                  color: "var(--text-1)",
-                }}
-                className="border rounded-xl outline-none resize-none p-4 text-sm placeholder:text-[var(--text-3)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/10 transition-all duration-200"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[11px] font-semibold text-[var(--text-3)] uppercase tracking-wider">
-                Your email
-              </label>
-              <input
-                name="user_email"
-                type="email"
-                placeholder="you@example.com"
-                required
-                style={{
-                  background: "var(--surface-2)",
-                  borderColor: "var(--border)",
-                  color: "var(--text-1)",
-                }}
-                className="border rounded-xl outline-none p-4 text-sm placeholder:text-[var(--text-3)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/10 transition-all duration-200"
+                style={inputStyle}
+                className={`${inputClass} resize-none`}
               />
             </div>
 
@@ -206,34 +242,54 @@ const ContactPage = () => {
               className="group relative overflow-hidden bg-[var(--text-1)] text-[var(--bg)] font-semibold py-3.5 px-6 rounded-xl transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/20 hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
             >
               <span className="relative z-10 flex items-center gap-2">
-                {sending ? "Sending..." : "Send Message"}
-                {!sending && (
-                  <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
+                {sending ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                    </svg>
+                    Sending…
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                  </>
                 )}
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#6366F1] to-[#8B5CF6] translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300 ease-out" />
             </button>
 
             {success && (
-              <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-3 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-xl p-4"
+              >
                 <span className="w-5 h-5 rounded-full bg-emerald-400 flex items-center justify-center flex-shrink-0">
                   <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
                 </span>
-                <span className="text-emerald-700 text-sm font-medium">
+                <span className="text-emerald-700 dark:text-emerald-400 text-sm font-medium">
                   Message sent! I&apos;ll be in touch soon.
                 </span>
               </motion.div>
             )}
+
             {error && (
-              <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl p-4">
-                <span className="text-red-600 text-sm font-medium">
-                  Something went wrong. Please try emailing me directly.
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-start gap-3 bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-xl p-4"
+              >
+                <svg className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-red-600 dark:text-red-400 text-sm font-medium">
+                  {error}
                 </span>
               </motion.div>
             )}
