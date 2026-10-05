@@ -32,8 +32,8 @@ export default function Home() {
   }, []);
 
   const stats = [
-    { value: "3+", label: "Projects" },
-    { value: "2+", label: "Years Exp" },
+    { value: "8", label: "Selected Projects" },
+    { value: "5", label: "AI & Systems Projects" },
     { value: "10+", label: "Technologies" },
   ];
 
@@ -82,9 +82,9 @@ export default function Home() {
               ref={bioRef}
               className="text-sm sm:text-base text-[var(--text-2)] leading-relaxed max-w-md opacity-0"
             >
-              I architect scalable web applications and AI-powered solutions —
-              blending clean engineering with computer vision, deep learning,
-              and pixel-perfect interfaces that users love to interact with.
+              I build applied AI and full-stack applications — connecting models,
+              APIs, and interfaces to solve practical problems. My work spans
+              business assistants, recommendation systems, and computer vision.
             </p>
 
             {/* Stats */}
@@ -135,7 +135,7 @@ export default function Home() {
                 </svg>
               </a>
               <a
-                href="https://www.linkedin.com/in/muhammad-adil-818a13319/"
+                href="https://www.linkedin.com/in/adil-umer-818a13319/"
                 target="_blank"
                 rel="noreferrer"
                 className="text-[var(--text-3)] hover:text-[var(--accent)] transition-colors duration-200"

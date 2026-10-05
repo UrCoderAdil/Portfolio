@@ -3,6 +3,7 @@ import Brain from "../components/brain";
 import { motion, useInView, useScroll } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
+import { certifications } from "../data/certifications";
 
 const skills = [
   { label: "Python",       category: "lang" },
@@ -40,30 +41,30 @@ const categoryColor = {
 const experiences = [
   {
     side: "left",
-    title: "Python & AI Engineer",
-    desc: "AI model development, computer vision pipelines, game engines & backend architecture.",
-    date: "2023 – 2025",
-    company: "Freelance",
+    title: "AI & Computer Vision Projects",
+    desc: "Recommendation engines, sign recognition, and camera-driven interactions using Python, OpenCV, and MediaPipe.",
+    date: "2026",
+    company: "Independent Projects",
   },
   {
     side: "right",
-    title: "Full-Stack Developer",
-    desc: "Next.js web applications with modern UI/UX and scalable Node.js backends.",
-    date: "2025 – Present",
-    company: "Freelance",
+    title: "Full-Stack & Backend Projects",
+    desc: "Multi-tenant business assistants and pipeline dashboards connecting Next.js interfaces with Python and NestJS services.",
+    date: "2026",
+    company: "Independent Projects",
   },
   {
     side: "left",
-    title: "JavaScript Engineer",
-    desc: "Building interactive, high-performance websites with GSAP, Three.js & React.",
+    title: "Interactive Web Projects",
+    desc: "Responsive web interfaces and scroll-driven animation experiments with Next.js, React, and GSAP.",
     date: "2024 – Present",
-    company: "Freelance",
+    company: "Independent Projects",
   },
 ];
 
 const stats = [
-  { value: "3+", label: "Projects Shipped" },
-  { value: "2+", label: "Years Building" },
+  { value: "8", label: "Selected Projects" },
+  { value: "5", label: "Engineering Projects" },
   { value: "19+", label: "Technologies" },
 ];
 
@@ -170,15 +171,14 @@ const AboutPage = () => {
             {/* Bio text */}
             <div className="flex flex-col gap-4 text-sm sm:text-base leading-relaxed" style={{ color: "var(--text-2)" }}>
               <p>
-                I am a passionate learner and builder with a sharp curiosity for technology, AI, and design.
-                From engineering computer vision pipelines to crafting modern full-stack applications,
-                I thrive on exploring both logical precision and creative expression.
+                I build software at the intersection of applied AI and full-stack engineering.
+                My projects connect conversational agents, recommendation models, and computer vision
+                with the APIs and interfaces that make them usable.
               </p>
               <p>
-                My journey bridges programming, deep learning, UI/UX design, and app development —
-                leveraging Next.js, React, Python (TensorFlow / OpenCV), Node.js, and Android.
-                I write elegant code, design intuitive interfaces, and constantly ask{" "}
-                <em>&ldquo;why?&rdquo;</em> to truly master what I build.
+                I work with Python, FastAPI, Next.js, React, and tools such as OpenCV and MediaPipe.
+                I learn by building the system, understanding its limits, and improving how the pieces
+                work together — from data and model behavior to the user experience.
               </p>
             </div>
 
@@ -234,6 +234,31 @@ const AboutPage = () => {
             <ScrollCue />
           </div>
 
+          <section aria-labelledby="certifications-heading" className="flex flex-col gap-7">
+            <div>
+              <span className="text-xs font-semibold tracking-[0.22em] uppercase text-[var(--accent)]">Continued Learning</span>
+              <h2 id="certifications-heading" className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-1)]" style={{ fontFamily: "var(--font-jakarta)" }}>Certifications</h2>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--text-2)]">Selected credentials in applied AI, machine learning, and the mathematics behind it.</p>
+            </div>
+            <div className="grid gap-4">
+              {certifications.map((cert) => (
+                <article key={cert.url} className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6 flex flex-col gap-3 shadow-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs font-semibold text-[var(--accent)]">{cert.issuer}</span>
+                    <time dateTime={cert.datetime} className="text-xs text-[var(--text-3)]">{cert.date}</time>
+                  </div>
+                  <h3 className="text-lg font-bold leading-snug text-[var(--text-1)]">{cert.title}</h3>
+                  <p className="text-xs font-medium text-[var(--text-3)]">{cert.kind}</p>
+                  <p className="text-sm leading-relaxed text-[var(--text-2)]">{cert.desc}</p>
+                  <div className="flex flex-wrap gap-4 pt-2 text-sm font-semibold text-[var(--accent)]">
+                    <a href={cert.url} target="_blank" rel="noopener noreferrer" className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4" aria-label={`Verify ${cert.title}`}>Verify credential <span aria-hidden="true">↗</span></a>
+                    <a href={`/certifications/${cert.pdf}`} target="_blank" rel="noopener noreferrer" className="hover:underline focus-visible:outline-2 focus-visible:outline-offset-4" aria-label={`View ${cert.title} certificate PDF`}>View certificate (PDF)</a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
           {/* ─── Experience ─── */}
           <div className="flex flex-col gap-7 pb-24" ref={expRef}>
             <div>
@@ -247,7 +272,7 @@ const AboutPage = () => {
                 className="mt-2 text-4xl font-bold tracking-tight"
                 style={{ color: "var(--text-1)", fontFamily: "var(--font-jakarta)" }}
               >
-                Experience
+                Project Experience
               </motion.h2>
             </div>
 

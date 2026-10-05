@@ -170,3 +170,7 @@ body {
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
+
+/* Typography refinement; original visual design preserved. */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 // In-memory rate limiter — resets per serverless cold-start, good enough for a portfolio
 const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
@@ -86,7 +85,7 @@ export async function POST(req: NextRequest) {
   if (!process.env.RESEND_API_KEY) {
     console.error("[contact] RESEND_API_KEY is not set");
     return NextResponse.json(
-      { error: "Email service is not configured." },
+      { error: "The message form is temporarily unavailable. Please email adilumer2005@gmail.com directly." },
       { status: 500 }
     );
   }
@@ -96,6 +95,7 @@ export async function POST(req: NextRequest) {
   const safeEmail = escapeHtml(email.trim());
   const safeMessage = escapeHtml(message.trim()).replace(/\n/g, "<br />");
 
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { data: resendData, error: resendError } = await resend.emails.send({
     from: "Portfolio Contact <onboarding@resend.dev>",
     to: "adilumer2005@gmail.com",

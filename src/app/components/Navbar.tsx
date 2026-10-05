@@ -16,7 +16,7 @@ const links = [
 const socials = [
   { href: "https://github.com/UrCoderAdil", src: "/github.png", alt: "github" },
   {
-    href: "https://www.linkedin.com/in/muhammad-adil-818a13319/",
+    href: "https://www.linkedin.com/in/adil-umer-818a13319/",
     src: "/linkedin.png",
     alt: "linkedin",
   },

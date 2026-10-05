@@ -17,9 +17,9 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "UrCoderAdil | Full-Stack Developer",
+  title: "Adil Umer | Full-Stack Developer & AI Builder",
   description:
-    "Full-Stack Developer & AI/CV Solutions — building elegant, performant web experiences.",
+    "Muhammad Adil Umer builds applied AI, full-stack applications, and computer vision projects. Explore the work and credentials.",
 };
 
 export default function RootLayout({

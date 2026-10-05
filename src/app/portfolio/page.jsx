@@ -4,21 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
+import { selectedProjects } from "../data/selectedProjects";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
+const frontendProjects = [
   {
     id: 1,
     title: "MOJITO — Cocktail",
     category: "Landing Page",
     year: "2024",
-    desc: "An eye-catching interactive landing page built with GSAP delivering smooth, modern animations and a lively user experience that converts visitors.",
+    desc: "An eye-catching interactive landing page built with GSAP delivering smooth, modern animations and a lively user experience with carefully timed transitions and responsive interactions.",
     img: "/s2.png",
     link: "https://mojito-cocktail-landing-page.vercel.app/",
     tech: ["GSAP", "HTML/CSS", "JavaScript"],
-    featured: true,
+    featured: false,
   },
   {
     id: 2,
@@ -44,6 +45,8 @@ const projects = [
   },
 ];
 
+const projects = [...selectedProjects, frontendProjects[2], frontendProjects[1], frontendProjects[0]];
+
 const ProjectCard = ({ project, index }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
@@ -64,6 +67,8 @@ const ProjectCard = ({ project, index }) => {
               src={project.img}
               alt={project.title}
               fill
+              sizes="(min-width: 1024px) 55vw, 100vw"
+              priority
               className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--surface)]/0 lg:to-[var(--surface)]/60" />
@@ -93,6 +98,11 @@ const ProjectCard = ({ project, index }) => {
               <p className="text-[var(--text-2)] text-sm leading-relaxed">
                 {project.desc}
               </p>
+              {project.highlights && (
+                <ul className="list-disc pl-4 space-y-2 text-xs leading-relaxed text-[var(--text-2)]">
+                  {project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                </ul>
+              )}
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((t) => (
                   <span key={t} className="text-xs text-[var(--text-2)] bg-[var(--surface-2)] border border-[var(--border)] rounded-full px-3 py-1 font-medium">
@@ -103,9 +113,9 @@ const ProjectCard = ({ project, index }) => {
             </div>
 
             {project.link && (
-              <Link href={project.link} target="_blank" className="mt-8 self-start">
+              <Link href={project.link} target="_blank" rel="noopener noreferrer" className="mt-8 self-start">
                 <button className="group/btn flex items-center gap-2 bg-[var(--text-1)] text-[var(--bg)] text-sm font-semibold px-6 py-3 rounded-xl transition-all duration-300 hover:bg-[var(--accent)] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-500/20">
-                  View Live
+                  {project.linkLabel || "View Live"}
                   <svg className="w-4 h-4 transition-transform duration-200 group-hover/btn:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
@@ -128,19 +138,23 @@ const ProjectCard = ({ project, index }) => {
     >
       {/* Image */}
       <div className="relative aspect-video overflow-hidden bg-[var(--surface-2)]">
-        <Image
-          src={project.img}
-          alt={project.title}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-        />
+        {project.img ? (
+          <Image src={project.img} alt={project.title} fill sizes="(min-width: 768px) 45vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.05]" />
+        ) : (
+          <div aria-hidden="true" className="absolute inset-0 flex flex-col justify-end gap-2 p-7" style={{ background: `linear-gradient(135deg, ${project.accent}20, var(--surface-2))` }}>
+            <span className="absolute right-6 top-8 text-7xl font-bold tracking-tighter opacity-20" style={{ color: project.accent }}>{project.mark}</span>
+            <span className="text-[10px] font-mono tracking-[0.2em] uppercase" style={{ color: project.accent }}>Source code / GitHub</span>
+            <span className="text-2xl font-bold text-[var(--text-1)] tracking-tight">{project.title}</span>
+            <span className="text-xs text-[var(--text-3)]">{project.tech.slice(0, 3).join(" / ")}</span>
+          </div>
+        )}
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-[var(--text-1)]/0 group-hover:bg-[var(--text-1)]/40 transition-all duration-400 flex items-center justify-center">
           <div className="opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-300">
             {project.link && (
-              <Link href={project.link} target="_blank">
+              <Link href={project.link} target="_blank" rel="noopener noreferrer">
                 <span className="bg-[var(--surface)] text-[var(--text-1)] text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-[var(--accent)] hover:text-white transition-colors duration-200 flex items-center gap-2">
-                  View Live
+                  {project.linkLabel || "View Live"}
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
@@ -169,9 +183,14 @@ const ProjectCard = ({ project, index }) => {
             {project.year}
           </span>
         </div>
-        <p className="text-[var(--text-2)] text-sm leading-relaxed line-clamp-2">
+        <p className="text-[var(--text-2)] text-sm leading-relaxed">
           {project.desc}
         </p>
+        {project.highlights && (
+          <ul className="list-disc pl-4 space-y-2 text-xs leading-relaxed text-[var(--text-2)]">
+            {project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+          </ul>
+        )}
         <div className="flex flex-wrap gap-1.5 pt-1">
           {project.tech.map((t) => (
             <span key={t} className="text-xs text-[var(--text-3)] bg-[var(--surface-2)] rounded-full px-2.5 py-0.5 font-medium border border-[var(--border)]">
@@ -179,6 +198,11 @@ const ProjectCard = ({ project, index }) => {
             </span>
           ))}
         </div>
+        {project.link && (
+          <Link href={project.link} target="_blank" rel="noopener noreferrer" className="mt-3 self-start rounded-lg border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--accent)] hover:bg-[var(--surface-2)] focus-visible:outline-2 focus-visible:outline-offset-4">
+            {project.linkLabel || "View Live"} <span aria-hidden="true">↗</span>
+          </Link>
+        )}
       </div>
     </motion.div>
   );
@@ -228,9 +252,9 @@ const PortfolioPage = () => {
           {/* Quick stats */}
           <div className="flex gap-6 pt-2">
             {[
-              { v: "3+", l: "Live Projects" },
-              { v: "2+", l: "Years Experience" },
-              { v: "100%", l: "Client Satisfaction" },
+              { v: String(projects.length), l: "Selected Projects" },
+              { v: "5", l: "Engineering Projects" },
+              { v: "3", l: "Web Projects" },
             ].map(({ v, l }, i) => (
               <div
                 key={l}
