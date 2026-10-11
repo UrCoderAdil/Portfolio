@@ -76,8 +76,8 @@ const ProjectCard = ({ project, index }) => {
               <span className="bg-[var(--surface)]/90 backdrop-blur-sm text-[var(--text-2)] text-[11px] font-semibold rounded-full px-3 py-1 border border-[var(--border)]">
                 {project.category}
               </span>
-              <span className="bg-indigo-500/10 text-[var(--accent)] text-[11px] font-semibold rounded-full px-3 py-1">
-                Featured
+              <span className={`${project.award ? "bg-amber-100 text-amber-950" : "bg-indigo-500/10 text-[var(--accent)]"} text-[11px] font-semibold rounded-full px-3 py-1`}>
+                {project.award || "Featured"}
               </span>
             </div>
           </div>
@@ -86,7 +86,7 @@ const ProjectCard = ({ project, index }) => {
           <div className="w-full lg:w-2/5 flex flex-col justify-between p-8 lg:p-10">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-[var(--text-3)]">01 / {String(projects.length).padStart(2, "0")}</span>
+                <span className="text-xs font-mono text-[var(--text-3)]">{String(index + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span>
                 <span className="text-xs text-[var(--text-3)]">{project.year}</span>
               </div>
               <h2
@@ -253,8 +253,8 @@ const PortfolioPage = () => {
           <div className="flex gap-6 pt-2">
             {[
               { v: String(projects.length), l: "Selected Projects" },
-              { v: "5", l: "Engineering Projects" },
-              { v: "3", l: "Web Projects" },
+              { v: String(selectedProjects.length), l: "Engineering Projects" },
+              { v: String(frontendProjects.length), l: "Web Projects" },
             ].map(({ v, l }, i) => (
               <div
                 key={l}
@@ -268,14 +268,14 @@ const PortfolioPage = () => {
         </div>
 
         {/* Featured project */}
-        {featured.map((p) => (
-          <ProjectCard key={p.id} project={p} index={0} />
+        {featured.map((p, i) => (
+          <ProjectCard key={p.id} project={p} index={i} />
         ))}
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {rest.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i + 1} />
+            <ProjectCard key={p.id} project={p} index={i + featured.length} />
           ))}
 
           {/* "More coming" placeholder */}

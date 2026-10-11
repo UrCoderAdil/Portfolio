@@ -3,13 +3,4 @@ const config = {
 };
 
 export default config;
-module.exports = {
-  theme: {
-    extend: {
-      screens: {
-        xs: "320px", // new breakpoint for smallest phones
-      },
-    },
-  },
-};
 

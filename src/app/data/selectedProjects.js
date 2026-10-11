@@ -1,5 +1,30 @@
 export const selectedProjects = [
   {
+    "id": 9,
+    "title": "SEHAT GRID",
+    "category": "AI-Assisted Healthcare Coordination",
+    "year": "2026",
+    "desc": "A deployed MVP connecting public and private hospitals in Islamabad through reviewed primary-care referrals, shared capacity, and funding plans.",
+    "tech": [
+      "Next.js",
+      "TypeScript",
+      "FastAPI",
+      "Three.js",
+      "OR-Tools"
+    ],
+    "highlights": [
+      "Won 2nd place (1st Runner Up) in AICON’26 Build with AI at NUST, earning a PKR 25,000 prize.",
+      "Built role-based workspaces for hospital reception, onboarding, and government planning, with AI-assisted service matching."
+    ],
+    "mark": "SG",
+    "accent": "#0d9488",
+    "link": "https://sehat-grid.vercel.app/",
+    "linkLabel": "View Live Demo",
+    "featured": true,
+    "img": "/projects/sehat-grid.png",
+    "award": "AICON’26 · 2nd Place"
+  },
+  {
     "id": 8,
     "title": "WhatsApp Business Assistant",
     "category": "AI Agent & Business Automation",
